@@ -33,9 +33,7 @@ public class MapManager : BaseManager
             Backgrounds[i].transform.position += new Vector3(0, -ScrollSpeed, 0) * Time.deltaTime;
             if (Backgrounds[i].position.y < _bottomPos)
             {
-
-                Debug.Log(Backgrounds[i].transform.position);
-                Debug.Log(_bottomPos);
+;
                 int index = i;
                 if(index < 0)
                 {

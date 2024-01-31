@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,12 +8,17 @@ public class GameManager : MonoBehaviour
 {
     
     static public GameManager Instance;
-
+    public bool bStageCleared = false;
     public PlayerCharater _player;
     public PlayerCharater Player => _player;
 
     public MapManager MapManager;
-    public MapManager ItemManager;
+    public ItemManager ItemManager;
+    public EnemySpawner EnemySpawner;
+
+    public Canvas StageRecultCanvas;
+    public TMP_Text CurrentScoreText;
+    public TMP_Text TimeText;
 
     private void Awake()
     {
@@ -29,7 +35,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         MapManager.Init(this);
-        ItemManager.Init(this);
+        EnemySpawner.Init(this);
         
     }
 

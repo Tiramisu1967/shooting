@@ -58,14 +58,14 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1408920242171466625, guid: 0d2956c9282bedc41b2b65991b4c8111, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -3212376562552053304}
+      addedObject: {fileID: 5064380171930836828}
   m_SourcePrefab: {fileID: 100100000, guid: 0d2956c9282bedc41b2b65991b4c8111, type: 3}
 --- !u!1 &9159169465773604407 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1408920242171466625, guid: 0d2956c9282bedc41b2b65991b4c8111, type: 3}
   m_PrefabInstance: {fileID: 7824605662997310902}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &-3212376562552053304
+--- !u!114 &5064380171930836828
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -77,5 +77,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be4097953577f3d48886661501b7492a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 3
+  AttackDamage: 1
+  bIsFreeze: 0
+  bMustSpawnItem: 0
   MoveSpeed: 5
+  ExplodeFx: {fileID: 0}
   Amplitude: 5

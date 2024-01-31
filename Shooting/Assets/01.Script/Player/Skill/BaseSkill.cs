@@ -12,7 +12,7 @@ public class BaseSkill : MonoBehaviour
 
     public void Init(PlayerCharater playerCharater)
     {
-
+        _playerCharater = playerCharater;
     }
     public void Update()
     {
@@ -21,7 +21,7 @@ public class BaseSkill : MonoBehaviour
             CurrentTime -= Time.deltaTime;
             if(CurrentTime < 0)
             {
-                CurrentTime = CooldownTime;
+               
                 bIsCoolDown = false;
             }
         }    
@@ -29,16 +29,19 @@ public class BaseSkill : MonoBehaviour
 
     public bool IsAvailable()
     {
-        return bIsCoolDown=true;
+        return !bIsCoolDown;
     }
 
     public virtual void Activate()
     {
-        IsAvailable();
+
+        bIsCoolDown=true;
+        CurrentTime = CooldownTime;
     }
 
     public void InitCoolDown()
     {
-
+        bIsCoolDown = false;
+        CooldownTime = 0;
     }
 }

@@ -7,6 +7,8 @@ public class Enemy : MonoBehaviour
     public float Health = 3f;
     public float AttackDamage = 1f;
     bool bIsDead = false;
+    public bool bIsFreeze = false;
+    public bool bIsDestroy = false;
     public bool bMustSpawnItem = false;
     public float MoveSpeed;
     public GameObject ExplodeFx;
@@ -28,16 +30,17 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    IEnumerator freeze()
-    {
-        yield return WaitForSecondsRealtime(3);
-    }
+    
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("PlayerBullet"))
         {
             Health -= 1;
+            if(Health < 0)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 

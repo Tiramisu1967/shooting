@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FreezeSkill : MonoBehaviour
+public class FreezeSkill :BaseSkill
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void Activate()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        base.Activate();
+        GameObject[] enemy = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach(var en in enemy)
+        {
+            if(en != null)
+            {
+                
+            }
+        }
     }
 }

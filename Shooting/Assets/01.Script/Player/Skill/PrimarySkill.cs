@@ -13,6 +13,7 @@ public class PrimarySkill : BaseSkill
     void Start()
     {
         CooldownTime = 0.2f;
+        Debug.Log(CooldownTime);
 
         weapons = new Weapon[4];
 
@@ -32,7 +33,7 @@ public class PrimarySkill : BaseSkill
     {
         GameObject instance = Instantiate(Projectile, position, Quaternion.identity);
         Projectile projectile = instance.GetComponent<Projectile>();
-
+        
         if(projectile != null)
         {
             projectile.MoveSpeed = ProjectileMoveSpeed;
@@ -85,11 +86,11 @@ public class Level4Weapon : Weapon
     public void Activate(PrimarySkill primarySkill, PlayerCharater playerCharater)
     {
         Vector3 position = GameManager.Instance.Player.transform.position;
-        for(int i = 0; i < 180; i++)
+        for(int i = 0; i < 180; i += 10)
         {
             float angle = i * Mathf.Deg2Rad;
-            position = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0);
-            primarySkill.ShootProjectile(position, Vector3.up);
+            Vector3 direction= new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0);
+            primarySkill.ShootProjectile(position, direction);
         }
     }
 }

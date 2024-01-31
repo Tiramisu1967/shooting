@@ -33,4 +33,5 @@ public class Projectile : MonoBehaviour
     {
         _direction = direction;
     }
+
 }

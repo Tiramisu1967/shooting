@@ -67,5 +67,35 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1408920242171466625, guid: 0d2956c9282bedc41b2b65991b4c8111, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1475379857199904164}
   m_SourcePrefab: {fileID: 100100000, guid: 0d2956c9282bedc41b2b65991b4c8111, type: 3}
+--- !u!1 &5925480453013472740 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1408920242171466625, guid: 0d2956c9282bedc41b2b65991b4c8111, type: 3}
+  m_PrefabInstance: {fileID: 4735240807250876005}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1475379857199904164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5925480453013472740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71a996b152382fc49b48e44709104dd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 3
+  AttackDamage: 1
+  bIsFreeze: 0
+  bMustSpawnItem: 0
+  MoveSpeed: 5
+  ExplodeFx: {fileID: 0}
+  AttackStopTimpe: 3
+  MoveTime: 4
+  ProjectileMoveSpeed: 2
+  Projectile: {fileID: 4039346356428436469, guid: ef1953c4d759f3143af8866eec515183, type: 3}

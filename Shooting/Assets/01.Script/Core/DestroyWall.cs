@@ -6,7 +6,7 @@ public class DestroyWall : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision != null && collision.gameObject.CompareTag("Background"))
+        if(collision != null)
         {
             Destroy(collision.gameObject);
         }

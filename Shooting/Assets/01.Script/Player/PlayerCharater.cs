@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,7 +13,7 @@ public class PlayerCharater : MonoBehaviour
     #endregion
 
     #region Skills
-    [HideInInspector] public Dictionary<EnumTypes.PlayerSkill, BaseSkill> Skill;
+    [HideInInspector] public Dictionary<EnumTypes.PlayerSkill, BaseSkill> Skills;
     [SerializeField] private GameObject[] _skillPrefabs;
     #endregion
 
@@ -42,6 +43,10 @@ public class PlayerCharater : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
+    private void Start()
+    {
+        InitializeSkills();
+    }
     public void Update()
     {
         UpdateMovement();
@@ -50,8 +55,8 @@ public class PlayerCharater : MonoBehaviour
 
     public void InitSkillCoolDown()
     {
-        foreach (var skill in Skill) { 
-        
+        foreach (var skill in Skills.Values) { 
+            skill.InitCoolDown();
         }
     }
    /* 해야 할 것 
@@ -76,10 +81,51 @@ public class PlayerCharater : MonoBehaviour
         if (Input.GetKey(KeyCode.C)) ActivateSkill(EnumTypes.PlayerSkill.Bomb);
     }
 
+    private void InitializeSkills()
+    {
+        Skills = new Dictionary<EnumTypes.PlayerSkill, BaseSkill>();
+        for (int i = 0; i < _skillPrefabs.Length; i++)
+        {
+            AddSkill((EnumTypes.PlayerSkill)i, _skillPrefabs[i]);
+        }
+        CurrentWeaponLevel=GameInstance.instance.CurrentPlayerWeaponLevel;
+    }
+    private void AddSkill(EnumTypes.PlayerSkill skillType, GameObject prefab)
+    {
+        GameObject SkillObject = Instantiate(prefab, transform.position, Quaternion.identity);
+        SkillObject.transform.parent = this.transform;
+
+        if (SkillObject != null)
+        {
+            BaseSkill skillComponent = SkillObject.GetComponent<BaseSkill>();
+            skillComponent.Init(this);
+            Skills.Add(skillType, skillComponent);
+        }
+       //
+       //skillObject
+    }
+
     private void ActivateSkill(EnumTypes.PlayerSkill skillType)
     {
-        InitSkillCoolDown();
+        if (Skills.ContainsKey(skillType))
+        {
+            if (Skills[skillType].IsAvailable())
+            {
+                CurrentWeaponLevel = GameInstance.instance.CurrentPlayerWeaponLevel;
+                Skills[skillType].Activate();
+
+            }
+            else
+            {
+                
+                
+                GameManager.Instance.GetComponent<PlayerUI>().NoticeSkillCooldown(skillType);
+            }
+        }
+        
+       
     }
+
 
 
 }
