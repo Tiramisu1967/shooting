@@ -34,7 +34,7 @@ public class PlayerUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       // UpdateHealth();
+        UpdateHealth();
         UpdateSkills();
         UpdateFuel();
     }
@@ -44,7 +44,7 @@ public class PlayerUI : MonoBehaviour
         int HP = GameManager.Instance.Player.GetComponent<PlayerHPSystem>().Health;
         for(int i = 0; i < HealthImages.Length; i++)
         {
-            HealthImages[i].gameObject.SetActive(i < HPs);
+            HealthImages[i].gameObject.SetActive(i < HP);
         }
         
     }

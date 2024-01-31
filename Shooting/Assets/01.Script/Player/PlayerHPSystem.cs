@@ -39,6 +39,7 @@ public class PlayerHPSystem : MonoBehaviour
         {
             Health -= 1;
             GameInstance.instance.CurrentPlayerHP = Health;
+            Destroy(collision.gameObject);
 
             if(Health <= 0)
             {
