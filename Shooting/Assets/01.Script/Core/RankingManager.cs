@@ -35,6 +35,22 @@ public class RankingManager : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
+    public void StartStage()
+    {
+        SceneManager.LoadScene("Stage1");
+        if (GameInstance.instance != null)
+        {
+            Debug.Log("!");
+            GameInstance.instance.CurrentPlayerFuel = 100;
+            GameInstance.instance.CurrentPlayerHP = 3;
+            GameInstance.instance.CurrentPlayerWeaponLevel = 0;
+            GameInstance.instance.CurrentStageLevel = 1;
+            GameInstance.instance.GameStartTime = 0;
+            GameInstance.instance.Score = 0;
+        }
+        
+    }
+
     public void MainMenuRanking()
     {
         RankingCanvas.gameObject.SetActive(true);

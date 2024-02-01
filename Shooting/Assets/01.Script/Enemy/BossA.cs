@@ -1,11 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class BossA : MonoBehaviour
 {
     public GameObject Projectile;
+    public GameObject vim;
     public float ProjectileMoveSpeed = 5.0f;
     public float FireRate = 2.0f;
     public float MoveSpeed = 2.0f;
@@ -16,60 +16,84 @@ public class BossA : MonoBehaviour
     private bool _bCanMove = false;
     private Vector3 _originPosition;
 
-    
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-            _originPosition = transform.position;
+        Enemy enemy = GetComponent<Enemy>();
+        enemy.bMustSpawnItem = true;
+        _originPosition = transform.position; 
+        StartCoroutine(MoveDownAndStartPattern()); 
     }
 
     private IEnumerator MoveDownAndStartPattern()
     {
-        yield return new WaitForSeconds(2f);
-        Nextpattern();
-    }
-    void Update()
-    {
-        if(_bCanMove)
+        while (transform.position.y > _originPosition.y - 3f)
         {
-            MoveSideways();
+            transform.Translate(Vector3.down * MoveSpeed * Time.deltaTime);
+            yield return null;
         }
+        NextPattern();
+        _bCanMove = true;
     }
 
-    private void Nextpattern()
+    private void Update()
     {
+        
+        if (_bCanMove)
+            MoveSideways();
+    }
+
+    private void NextPattern()
+    {
+      
         _currentPatternIndex = Random.Range(0, 2);
-        switch(_currentPatternIndex)
+        Debug.Log(_currentPatternIndex);
+    
+        switch (_currentPatternIndex)
         {
             case 0:
-                pattern1();
+                Pattern1();
                 break;
             case 1:
-                pattern2();
+                Pattern2();
                 break;
             case 2:
                 Pattern3();
                 break;
         }
-
     }
+
 
     private void MoveSideways()
     {
         if (_movingRight)
         {
-            transform.Translate(new Vector3(MoveSpeed * Time.deltaTime, 0, 0));
-            Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
-            if (pos.x < 0) pos.x = 0;
-            transform.position = Camera.main.ViewportToWorldPoint(pos);
-
+            transform.Translate(Vector3.right * MoveSpeed * Time.deltaTime);
+            if (transform.position.x > MoveDistance)
+            {
+                _movingRight = false;
+            }
         }
         else
         {
-            transform.Translate(new Vector3(MoveSpeed * Time.deltaTime, 0, 0));
-            Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
-            if (pos.x > 1) pos.x = 1;
-            transform.position = Camera.main.ViewportToWorldPoint(pos);
+            transform.Translate(Vector3.left * MoveSpeed * Time.deltaTime);
+            if (transform.position.x < -MoveDistance)
+            {
+                _movingRight = true;
+            }
+        }
+    }
+
+    private void StartMovingSideways()
+    {
+        StartCoroutine(MovingSidewaysRoutine());
+    }
+
+    private IEnumerator MovingSidewaysRoutine()
+    {
+        while (true)
+        {
+            MoveSideways();
+            yield return null;
         }
     }
 
@@ -85,7 +109,7 @@ public class BossA : MonoBehaviour
         }
     }
 
-    private void pattern1()
+    private void Pattern1()
     {
             Vector3 position = GameManager.Instance.Player.transform.position;
             for (int i = 0; i < 370; i += 10)
@@ -94,11 +118,11 @@ public class BossA : MonoBehaviour
                 Vector3 direction = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0);
                 ShootProjectile(position, direction);
             }
-            MoveDownAndStartPattern();
+        NextPattern();
 
     }
 
-    IEnumerator pattern2()
+    IEnumerator Pattern2()
     {
         Vector3 position = GameManager.Instance.Player.transform.position;
         for (int n = 0; n < 5; n++)
@@ -111,7 +135,7 @@ public class BossA : MonoBehaviour
             }
             yield return new WaitForSeconds(1f);
         }
-        MoveDownAndStartPattern();
+        NextPattern();
     }
 
     public void Pattern3()
@@ -119,14 +143,13 @@ public class BossA : MonoBehaviour
         if(this.GetComponent<Enemy>().Health == 1)
         {
             this.GetComponent<Enemy>().Health += 1;
-            MoveDownAndStartPattern();
         }
-        else
-        {
-            Nextpattern();
-        }
+        NextPattern();
     }
 
-    // Update is called once per frame
+    private void OnDestroy()
+    {
+        GameManager.Instance.StageClear();
+    }
 
 }

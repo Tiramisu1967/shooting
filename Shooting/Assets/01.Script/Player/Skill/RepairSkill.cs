@@ -7,12 +7,26 @@ public class RepairSkill : BaseSkill
     public override void Activate()
     {
         base.Activate();
-        if (GameInstance.instance.CurrentPlayerHP == 3)
+
+        PlayerHPSystem system = GameManager.Instance.Player.GetComponent<PlayerHPSystem>();
+        PlayerFuelSystem Fuelsystme = GameManager.Instance.Player.GetComponent<PlayerFuelSystem>();
+        if (system != null)
         {
-            if (GameInstance.instance.CurrentPlayerFuel <= 20)
+            if (Fuelsystme.Fuel >= 11)
             {
-                GameInstance.instance.CurrentPlayerFuel -= 20;
-                GameInstance.instance.CurrentPlayerHP += 1;
+                if (system.Health < system.MaxHealth)
+                {
+                    Fuelsystme.Fuel -= 10;
+                    system.Health += 1;
+                }
+                else
+                {
+                    Debug.Log("체력이 이미 최대입니다.");
+                }
+            }
+            else
+            {
+                Debug.Log("연료 부족!");
             }
         }
     }

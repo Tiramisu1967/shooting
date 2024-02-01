@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.UIElements;
 using UnityEngine;
 
 public class PlayerHPSystem : MonoBehaviour
@@ -35,22 +34,39 @@ public class PlayerHPSystem : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy")
-            &&!GameManager.Instance.Player.Invincibility)
-        {
+            && !GameManager.Instance.Player.Invincibility
+            && !GameManager.Instance.bStageCleared)
+        { 
             Health -= 1;
             GameInstance.instance.CurrentPlayerHP = Health;
-            Destroy(collision.gameObject);
 
             if(Health <= 0)
             {
+                GameManager.Instance.Player.DeadProcess();
                 Destroy(this.gameObject);
             }
-        }
 
-        if (collision.gameObject.CompareTag("Item"))
+            
+            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+            if(enemy != null)
+            {
+                if (!enemy.bIsDestroy)
+                {
+                    Destroy(collision.gameObject);
+                }
+            } else
+            {
+                Destroy(collision.gameObject);
+            }
+        }
+        else
+       if (collision.gameObject.CompareTag("Item"))
         {
-            BaseItem item = collision.gameObject.GetComponent<BaseItem>();
-            item.OnGetItem(GameManager.Instance.Player);
+            if (Health > MaxHealth)
+            {
+                Health = MaxHealth;
+            }
+
         }
         GameInstance.instance.CurrentPlayerHP = Health;
     }

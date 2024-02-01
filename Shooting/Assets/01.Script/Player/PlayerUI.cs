@@ -41,11 +41,15 @@ public class PlayerUI : MonoBehaviour
 
     public void UpdateHealth()
     {
-        int HP = GameManager.Instance.Player.GetComponent<PlayerHPSystem>().Health;
-        for(int i = 0; i < HealthImages.Length; i++)
+        if(GameManager.Instance.Player != null)
         {
-            HealthImages[i].gameObject.SetActive(i < HP);
+            int HP = GameManager.Instance.Player.GetComponent<PlayerHPSystem>().Health;
+            for (int i = 0; i < HealthImages.Length; i++)
+            {
+                HealthImages[i].gameObject.SetActive(i < HP);
+            }
         }
+        
         
     }
 

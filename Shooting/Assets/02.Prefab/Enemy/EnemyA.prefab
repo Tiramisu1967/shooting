@@ -80,7 +80,10 @@ MonoBehaviour:
   Health: 3
   AttackDamage: 1
   bIsFreeze: 0
+  bIsDestroy: 0
   bMustSpawnItem: 0
   MoveSpeed: 5
-  ExplodeFx: {fileID: 0}
+  freezetime: 0
+  tmpSpeed: 0
+  ExplodeFX: {fileID: 5017900480036976570, guid: f6c47d0405b83bf48bdab8a8e52c6426, type: 3}
   Amplitude: 5

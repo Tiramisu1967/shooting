@@ -92,10 +92,13 @@ MonoBehaviour:
   Health: 3
   AttackDamage: 1
   bIsFreeze: 0
+  bIsDestroy: 0
   bMustSpawnItem: 0
   MoveSpeed: 5
-  ExplodeFx: {fileID: 0}
-  AttackStopTimpe: 3
+  freezetime: 0
+  tmpSpeed: 0
+  ExplodeFX: {fileID: 5017900480036976570, guid: f6c47d0405b83bf48bdab8a8e52c6426, type: 3}
+  AttackStopTime: 0
   MoveTime: 4
   ProjectileMoveSpeed: 2
   Projectile: {fileID: 4039346356428436469, guid: ef1953c4d759f3143af8866eec515183, type: 3}

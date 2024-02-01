@@ -6,6 +6,6 @@ public class InvincibilityItem : BaseItem
 {
     public override void OnGetItem(PlayerCharater playerCharater)
     {
-        playerCharater.Invincibility = true;
+        playerCharater.SetInvincibility(true);
     }
 }

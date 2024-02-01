@@ -32,7 +32,7 @@ public class ItemManager : MonoBehaviour
             GameObject itemPrefab = foundItem.Prefab;
             GameObject inst = Instantiate(itemPrefab, position, Quaternion.identity);
 
-            inst.GetComponent<Animator>().SetInteger("ItemIndex", (int )name);
+            inst.GetComponent<Animator>().SetInteger("Item", (int )name);
         }
     }
 

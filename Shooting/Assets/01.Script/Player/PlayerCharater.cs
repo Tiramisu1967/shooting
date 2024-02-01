@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Xml.Serialization;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -79,6 +80,8 @@ public class PlayerCharater : MonoBehaviour
         if (Input.GetKey(KeyCode.Z)) ActivateSkill(EnumTypes.PlayerSkill.Primary);
         if (Input.GetKey(KeyCode.X)) ActivateSkill(EnumTypes.PlayerSkill.Repair);
         if (Input.GetKey(KeyCode.C)) ActivateSkill(EnumTypes.PlayerSkill.Bomb);
+        if (Input.GetKey(KeyCode.V)) 
+            ActivateSkill(EnumTypes.PlayerSkill.freeze);
     }
 
     private void InitializeSkills()
@@ -107,25 +110,53 @@ public class PlayerCharater : MonoBehaviour
 
     private void ActivateSkill(EnumTypes.PlayerSkill skillType)
     {
+         
         if (Skills.ContainsKey(skillType))
         {
             if (Skills[skillType].IsAvailable())
             {
                 CurrentWeaponLevel = GameInstance.instance.CurrentPlayerWeaponLevel;
                 Skills[skillType].Activate();
-
             }
             else
             {
-                
-                
                 GameManager.Instance.GetComponent<PlayerUI>().NoticeSkillCooldown(skillType);
             }
         }
-        
-       
+    }
+
+    public void SetInvincibility(bool invin)
+    {
+        if (invin)
+        {
+            if (invincibilityCoroutine != null)// null일 경우 멈춤
+            {
+                StopCoroutine(invincibilityCoroutine);
+            }
+
+            invincibilityCoroutine = StartCoroutine(InvincibilityCoroutine());// 해당 함수를 실행
+        }
+    }
+
+    private IEnumerator InvincibilityCoroutine()
+    {
+        Invincibility = true;
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        float invincibilityDuration = 3f;
+        spriteRenderer.color = new Color(1, 1, 1, 0.5f);
+        yield return new WaitForSeconds(invincibilityDuration);
+        Invincibility = false;
+        spriteRenderer.color = new Color(1, 1, 1, 1f);
     }
 
 
 
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Item"))
+        {
+            Destroy(collision.gameObject);
+            collision.gameObject.GetComponent<BaseItem>().OnGetItem(this);
+        }
+    }
 }
